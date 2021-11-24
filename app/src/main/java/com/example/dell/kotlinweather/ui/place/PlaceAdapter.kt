@@ -1,5 +1,6 @@
 package com.example.dell.kotlinweather.ui.place
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dell.kotlinweather.R
 import com.example.dell.kotlinweather.logic.model.Place
+import com.example.dell.kotlinweather.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.place_item.view.*
 
 class PlaceAdapter(private  val fragment: Fragment, private val placeList: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
@@ -25,7 +27,15 @@ class PlaceAdapter(private  val fragment: Fragment, private val placeList: List<
         val place = placeList[position]
         holder.placeName.text = place.name
         holder.cityName.text = place.province + place.city + place.name
-
+        holder.itemView.setOnClickListener {
+            val position = holder.adapterPosition
+            val place = placeList[position]
+            val intent = Intent(holder.itemView.context, WeatherActivity::class.java).apply {
+                putExtra("place_name", place.name)
+                putExtra("locationId", place.id)
+            }
+            fragment.startActivity(intent)
+        }
 
     }
 

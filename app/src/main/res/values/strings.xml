@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KotlinWeather</string>
-    <string name="edit_text">输入地址</string>
+    <string name="edit_text">请输入地址</string>
+    <string name="prediction">未来三天天气预报</string>
 </resources>
