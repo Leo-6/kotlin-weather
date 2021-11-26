@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dell.kotlinweather.R
 import com.example.dell.kotlinweather.logic.model.Place
 import com.example.dell.kotlinweather.ui.weather.WeatherActivity
+import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.place_item.view.*
 
-class PlaceAdapter(private  val fragment: Fragment, private val placeList: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
+class PlaceAdapter(private  val fragment: PlaceFragment, private val placeList: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val placeName: TextView = view.findViewById(R.id.placeName)
         val cityName: TextView = view.findViewById(R.id.placeAddress)
@@ -30,11 +31,22 @@ class PlaceAdapter(private  val fragment: Fragment, private val placeList: List<
         holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val place = placeList[position]
-            val intent = Intent(holder.itemView.context, WeatherActivity::class.java).apply {
-                putExtra("place_name", place.name)
-                putExtra("locationId", place.id)
+            val activity = fragment.activity
+            if(activity is WeatherActivity){
+                activity.drawerLayout.closeDrawers()
+                activity.viewModel.placeName = place.name
+                activity.viewModel.id = place.id
+                activity.refreshWeather()
+            } else {
+                val intent = Intent(holder.itemView.context, WeatherActivity::class.java).apply {
+                    putExtra("place_name", place.name)
+                    putExtra("locationId", place.id)
+                }
+                fragment.startActivity(intent)
+                activity?.finish()
             }
-            fragment.startActivity(intent)
+            fragment.viewModel.savePlace(place)
+
         }
 
     }

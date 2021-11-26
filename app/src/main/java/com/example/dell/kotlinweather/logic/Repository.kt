@@ -3,6 +3,8 @@ package com.example.dell.kotlinweather.logic
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.liveData
+import com.example.dell.kotlinweather.logic.Repository.savePlace
+import com.example.dell.kotlinweather.logic.dao.PlaceDao
 import com.example.dell.kotlinweather.logic.model.Place
 import com.example.dell.kotlinweather.logic.model.Weather
 import com.example.dell.kotlinweather.logic.network.WeatherNetwork
@@ -15,6 +17,12 @@ import java.lang.RuntimeException
 import kotlin.coroutines.CoroutineContext
 
 object Repository{
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
+
     fun searchPlaces(location: String) = fire(Dispatchers.IO) {
         val placeResponse = WeatherNetwork.searchPlaces(location)
         if (placeResponse.code == "200"){

@@ -4,8 +4,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/weather_background">
     <FrameLayout
+        android:id="@+id/titleLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:fitsSystemWindows="true">
+        <Button
+            android:id="@+id/navBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/home"/>
         <TextView
             android:id="@+id/placeName"
             android:layout_width="wrap_content"
